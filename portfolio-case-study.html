@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Case Study — AI Social Media Automation | Full-Stack Developer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0d0d0d;
+      color: #e8e8e8;
+      line-height: 1.7;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a0a2e 50%, #0d0d0d 100%);
+      border-bottom: 1px solid #2a2a2a;
+      padding: 80px 40px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #a78bfa;
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h1 span { color: #a78bfa; }
+
+    .hero p {
+      font-size: 18px;
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #ccc;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+
+    .section { margin-bottom: 60px; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #a78bfa;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    p { color: #aaa; margin-bottom: 16px; font-size: 16px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .stat-card {
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #a78bfa;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .flow-card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+    }
+
+    .flow-card:hover { border-color: #a78bfa; transition: border-color 0.2s; }
+
+    .flow-number {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .flow-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .flow-card p {
+      font-size: 13px;
+      color: #666;
+      margin: 0;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .tech-item {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tech-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .tech-item span { font-size: 14px; color: #ccc; font-weight: 500; }
+
+    .highlight-box {
+      background: rgba(139, 92, 246, 0.06);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-left: 4px solid #a78bfa;
+      border-radius: 0 12px 12px 0;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+
+    .highlight-box p {
+      color: #ccc;
+      font-size: 16px;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .feature-list { list-style: none; margin: 20px 0; }
+
+    .feature-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #1a1a1a;
+      color: #aaa;
+      font-size: 15px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .feature-list li::before {
+      content: '→';
+      color: #a78bfa;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(139, 92, 246, 0.08));
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p { max-width: 500px; margin: 0 auto 32px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin: 6px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: #ccc;
+      border: 1px solid #333;
+    }
+
+    .btn-secondary:hover { border-color: #a78bfa; color: #a78bfa; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      margin: 60px 0;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 40px 20px; }
+      .hero { padding: 60px 20px 40px; }
+      .cta-section { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="badge">Case Study</div>
+    <h1>AI-Powered <span>Social Media Automation</span> Workflow</h1>
+    <p>A fully autonomous content pipeline built with n8n, GPT-4o, and DALL·E 3 — zero manual trigger required.</p>
+    <div class="tags">
+      <span class="tag">n8n</span>
+      <span class="tag">GPT-4o</span>
+      <span class="tag">DALL·E 3</span>
+      <span class="tag">Telegram Bot</span>
+      <span class="tag">Buffer API</span>
+      <span class="tag">Google Sheets</span>
+      <span class="tag">Docker</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="section">
+      <div class="section-label">The Problem</div>
+      <h2>Consistent Personal Branding is Hard</h2>
+      <p>As a full-stack developer, staying consistent on social media is time-consuming. Writing platform-optimized posts for LinkedIn, Twitter, Instagram, and Facebook — twice a week — takes 3–5 hours minimum. It's either done inconsistently or not at all.</p>
+      <p>The goal was to build a system that handles everything — research, writing, visuals, and publishing — while still keeping a human in the loop for quality control.</p>
+
+      <div class="highlight-box">
+        <p>"What if I could wake up Monday morning, get a Telegram message with a fully written post and AI-generated image, tap 'approve', and have it live on all 4 platforms before my first coffee?"</p>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section">
+      <div class="section-label">The Solution</div>
+      <h2>A 10-Node Autonomous Workflow</h2>
+      <p>Built entirely in n8n (self-hosted via Docker), the workflow runs on a schedule — no trigger needed. It researches trending topics, generates platform-specific content, creates visuals, and waits for your approval before posting.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">2×</span>
+          <div class="stat-label">posts per week, automated</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">4</span>
+          <div class="stat-label">platforms in one workflow</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">~0</span>
+          <div class="stat-label">manual effort per post</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">10</span>
+          <div class="stat-label">n8n nodes connected</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section">
+      <div class="section-label">How It Works</div>
+      <h2>Step-by-Step Flow</h2>
+
+      <div class="flow-grid">
+        <div class="flow-card">
+          <div class="flow-number">1</div>
+          <h3>Schedule Trigger</h3>
+          <p>Fires automatically every Monday & Thursday at 9:00 AM (Asia/Dhaka timezone)</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">2</div>
+          <h3>Web Research</h3>
+          <p>Tavily API searches trending automation & business topics in real-time</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">3</div>
+          <h3>AI Content Generation</h3>
+          <p>GPT-4o generates all 4 platform posts + image prompt + reel script in one call</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">4</div>
+          <h3>Image Generation</h3>
+          <p>DALL·E 3 creates a branded visual from the AI-written image prompt</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">5</div>
+          <h3>Telegram Preview</h3>
+          <p>Full content package sent to Telegram for human review before posting</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">6</div>
+          <h3>Wait for Approval</h3>
+          <p>Workflow pauses. Reply "approve", "edit", or "reject" on Telegram</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">7</div>
+          <h3>Publish to All Platforms</h3>
+          <p>Buffer API posts simultaneously to LinkedIn, Twitter/X, Instagram & Facebook</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-number">8</div>
+          <h3>Log & Confirm</h3>
+          <p>Google Sheets logs every post. Telegram confirms it's live.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section">
+      <div class="section-label">Content Strategy</div>
+      <h2>Built for Both Branding & Client Acquisition</h2>
+      <p>The AI rotates content types strategically to maximize both audience growth and inbound client interest:</p>
+
+      <ul class="feature-list">
+        <li><strong>40% Educational</strong> — Teach automation to non-tech people in plain language. Builds authority.</li>
+        <li><strong>30% Inspirational</strong> — Real-world results: time saved, revenue earned through automation. Builds trust.</li>
+        <li><strong>20% Case Study / Portfolio</strong> — Show workflows you've built. Directly attracts clients.</li>
+        <li><strong>10% Soft CTA</strong> — "Want this built for your business? DM me." Natural lead generation.</li>
+      </ul>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section">
+      <div class="section-label">Tech Stack</div>
+      <h2>Tools Used</h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#1a1a2e">🔄</div>
+          <span>n8n (self-hosted)</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#1a2e1a">🤖</div>
+          <span>GPT-4o</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#2e1a1a">🎨</div>
+          <span>DALL·E 3</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#1a2a2e">🔍</div>
+          <span>Tavily API</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#2e2a1a">✈️</div>
+          <span>Telegram Bot</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#1a2e2a">📤</div>
+          <span>Buffer API</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#1a1a2e">📊</div>
+          <span>Google Sheets</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon" style="background:#2e1a2e">🐳</div>
+          <span>Docker</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section">
+      <div class="section-label">Key Features</div>
+      <h2>What Makes This Stand Out</h2>
+      <ul class="feature-list">
+        <li>Fully autonomous — no manual trigger, runs on schedule</li>
+        <li>Human-in-the-loop approval via Telegram before any post goes live</li>
+        <li>Platform-optimized content (not the same post copy-pasted everywhere)</li>
+        <li>AI-generated branded visuals for every post</li>
+        <li>Content rotation strategy balancing education, inspiration, and client acquisition</li>
+        <li>Full audit log in Google Sheets — every post tracked forever</li>
+        <li>Self-hosted on Docker — complete data ownership, no SaaS lock-in</li>
+        <li>Covers all audiences — developers, business owners, solopreneurs, non-tech people</li>
+      </ul>
+    </div>
+
+    <div class="cta-section">
+      <h2>Want This Built for Your Business?</h2>
+      <p>I build custom automation workflows for businesses, agencies, and solopreneurs. Let's talk about automating your operations.</p>
+      <a href="mailto:monir.shazib@gmail.com" class="btn btn-primary">📩 Get in Touch</a>
+      <a href="https://github.com/monirwd38/Auto-Social-Media-Content-Workflow" class="btn btn-secondary">⭐ View on GitHub</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
