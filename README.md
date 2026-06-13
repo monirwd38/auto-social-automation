@@ -210,9 +210,9 @@ This workflow is designed for **Full-Stack Developers** who want to:
 
 If you're a business owner, agency, or solopreneur who wants a custom automation workflow like this — feel free to reach out!
 
-📩 **[your-email@example.com]**
-🌐 **[your-portfolio-url]**
-💼 **[your-linkedin-url]**
+📩 **monir.shazib@gmail.com**
+🌐 **https://nexthiv.com**
+💼 **www.linkedin.com/in/md-moniruzzaman-b5709a24a**
 
 ---
 
